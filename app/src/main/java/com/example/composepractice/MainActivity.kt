@@ -26,12 +26,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import com.example.composepractice.ui.theme.ComposePracticeTheme
 import kotlin.random.Random
 
@@ -39,73 +44,39 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val context = LocalContext.current
-            Column(Modifier.fillMaxSize()) {
-                val color = remember {
-                    mutableStateOf(Color.Yellow)
+            val constraints = ConstraintSet {
+                val greenBox = createRefFor("greenbox")
+                val redBox = createRefFor("redbox")
+                val guideLine = createGuidelineFromTop(0.1f)
+
+                constrain(greenBox){
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    width = Dimension.value(100.dp)
+                    height = Dimension.value(100.dp)
                 }
-//                val color2 = remember {
-//                    mutableStateOf(Color.Magenta)
-//                }
-                ColorBox(
-                    Modifier
-                        .height(100.dp)
-                        .fillMaxSize()
-                ) {
-                    color.value = it
+
+                constrain(redBox){
+                    top.linkTo(guideLine)
+                    start.linkTo(greenBox.end)
+                    width = Dimension.value(100.dp)
+                    height = Dimension.value(100.dp)
                 }
-                Box(
-                    modifier = Modifier
-                        .background(color.value)
-                        .height(120.dp)
-                        .fillMaxSize()
+
+                createHorizontalChain(greenBox, redBox, chainStyle = ChainStyle.Packed)
+            }
+
+            ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier
+                    .background(Color.Green)
+                    .layoutId("greenbox")
                 )
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    itemsIndexed(listOf("this", "is", "oxms", "sd")) { index, item ->
-                        val color2 = remember {
-                            mutableStateOf(Color.Magenta)
-                        }
-                        Text(
-                            text = "$item $index",
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(color2.value)
-                                .padding(vertical = 24.dp)
-                                .clickable {
-                                    color2.value = Color(
-                                        Random.nextFloat(),
-                                        Random.nextFloat(),
-                                        Random.nextFloat(),
-                                        1f
-                                    )
-                                    Toast
-                                        .makeText(context, item, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                Box(modifier = Modifier
+                    .background(Color.Red)
+                    .layoutId("redbox")
+                )
 
-                        )
-                    }
             }
-
-
-//                items(5000) {
-//                    Text(
-//                        text = "Item $it",
-//                        fontSize = 25.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        textAlign = TextAlign.Center,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(vertical = 24.dp)
-//                    )
-//                }
-            }
-
         }
     }
 }
