@@ -20,9 +20,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,7 +40,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.example.composepractice.ui.theme.ComposePracticeTheme
+import kotlinx.coroutines.delay
 import kotlin.random.Random
+
+@Preview(device = Devices.DEFAULT)
+@Preview(device = Devices.AUTOMOTIVE_1024p)
+annotation class DevicesPreview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +56,14 @@ class MainActivity : ComponentActivity() {
                 val redBox = createRefFor("redbox")
                 val guideLine = createGuidelineFromTop(0.1f)
 
-                constrain(greenBox){
+                constrain(greenBox) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     width = Dimension.value(100.dp)
                     height = Dimension.value(100.dp)
                 }
 
-                constrain(redBox){
+                constrain(redBox) {
                     top.linkTo(guideLine)
                     start.linkTo(greenBox.end)
                     width = Dimension.value(100.dp)
@@ -67,13 +74,15 @@ class MainActivity : ComponentActivity() {
             }
 
             ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier
-                    .background(Color.Green)
-                    .layoutId("greenbox")
+                Box(
+                    modifier = Modifier
+                        .background(Color.Green)
+                        .layoutId("greenbox")
                 )
-                Box(modifier = Modifier
-                    .background(Color.Red)
-                    .layoutId("redbox")
+                Box(
+                    modifier = Modifier
+                        .background(Color.Red)
+                        .layoutId("redbox")
                 )
 
             }
@@ -102,7 +111,20 @@ fun ColorBox(
         })
 }
 
-@Preview(showBackground = true)
+@Composable
+fun SplashLoading(
+    modifier: Modifier = Modifier,
+    onTimeout: () -> Unit
+) {
+    val updatedOnTimeOut by rememberUpdatedState(newValue = onTimeout)
+    LaunchedEffect(key1 = true) {
+        delay(3000)
+        updatedOnTimeOut()
+    }
+}
+
+//@Preview(showBackground = true)
+@DevicesPreview
 @Composable
 fun GreetingPreview() {
     ComposePracticeTheme {
