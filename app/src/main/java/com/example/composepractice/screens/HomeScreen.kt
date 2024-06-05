@@ -80,7 +80,7 @@ fun CreativeContextualFlowLayoutExample() {
         val remainingItems = hobbies.size - scope.shownItemCount
         ChipItem(if (remainingItems == 0) "Less" else "+$remainingItems", onClick = {
             if (remainingItems == 0) {
-                maxLines = 2
+                maxLines = 4
             } else {
                 maxLines += 5
             }

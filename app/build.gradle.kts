@@ -63,6 +63,7 @@ dependencies {
     // Navigation Compose
     implementation(libs.navigation.compose)
     implementation ("androidx.compose.foundation:foundation:1.7.0-beta02")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
