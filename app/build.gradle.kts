@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     // Navigation Compose
     implementation(libs.navigation.compose)
+    implementation ("androidx.compose.foundation:foundation:1.7.0-beta02")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
