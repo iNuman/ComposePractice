@@ -45,7 +45,7 @@ fun BottomBar(navController: NavHostController) {
         BottomBarScreen.Settings,
     )
 
-    BottomAppBar {
+    BottomAppBar(containerColor = Color(0XFFCD921F), contentColor = Color.White) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         screens.forEach { screen ->
@@ -89,13 +89,13 @@ fun RowScope.AddItem(
 
 @Composable
 fun colors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = Color(0xFF03dac5),
-    selectedTextColor = Color(0xFF03dac5),
+    selectedIconColor = Color(0XFFC10628),
+    selectedTextColor = Color(0XFFC10628),
     indicatorColor = Color.Transparent,
     unselectedIconColor = Color.White,
     unselectedTextColor = Color.White,
-    disabledIconColor = Color.Cyan,
-    disabledTextColor = Color.Cyan,
+    disabledIconColor = Color.LightGray,
+    disabledTextColor = Color.LightGray,
 )
 
 

@@ -2,6 +2,7 @@ package com.example.composepractice.screens
 
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -40,12 +42,15 @@ fun ProfileScreen() {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .background(Color.Black),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Profile Screen", style = MaterialTheme.typography.headlineSmall,
+                    text = "Profile Screen",
+                    color = Color.White,
+                    style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .padding(start = 24.dp, bottom = 16.dp, end = 16.dp, top = 32.dp)
                         .align(Alignment.Start)
