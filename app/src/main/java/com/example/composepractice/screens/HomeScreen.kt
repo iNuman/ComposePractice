@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.ContextualFlowRow
 import androidx.compose.foundation.layout.ContextualFlowRowOverflow
 import androidx.compose.foundation.layout.ContextualFlowRowOverflowScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,15 +46,18 @@ fun HomeScreen() {
     ComposePracticeTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(15.dp),
+                    .background(Color.Black),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Spacer(modifier = Modifier.padding(vertical = 24.dp))
+                AnimatedTextSwitcher()
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
                 CreativeContextualFlowLayoutExample()
             }
         }
@@ -100,6 +104,7 @@ fun CreativeContextualFlowLayoutExample() {
     ) {
         Text(
             text = "My Hobbies",
+            color = Color.White,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 16.dp)
         )

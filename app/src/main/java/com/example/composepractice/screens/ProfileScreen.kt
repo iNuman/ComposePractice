@@ -24,14 +24,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import coil.compose.AsyncImage
 import com.example.composepractice.R
 import com.example.composepractice.ui.theme.ComposePracticeTheme
-import java.net.URI
 
 @Composable
 fun ProfileScreen() {
@@ -64,92 +62,93 @@ fun ProfileScreen() {
     }
 }
 
-@Composable
-fun ParallaxSwiper(
-    viewPortFraction: Float = 0.85f,
-    initialPage: Int = 0,
-    initialPageOffsetFraction: Float = 0f
-) {
-    val images = listOf(
-        R.drawable.image1,
-        R.drawable.image2,
-        R.drawable.image3,
-        R.drawable.image4,
-        R.drawable.image5
-    )
-
-    val pagerState = rememberPagerState(
-        initialPage = initialPage,
-        pageCount = { images.size },
-        initialPageOffsetFraction = initialPageOffsetFraction
-    )
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val contentPadding = (screenWidth * (1f - viewPortFraction) / 2)
-
-    HorizontalPager(
-        state = pagerState,
-        modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = contentPadding)
-    ) { page ->
-        val pageOffset = calculateCurrentOffsetForPage(page, pagerState)
-        SwiperItem(
-            image = images[page],
-            pageOffset = pageOffset
-        )
-    }
-}
-
-@Composable
-fun SwiperItem(
-    image: Int,
-    pageOffset: Float,
-) {
-
-    val translationFraction = if (pageOffset >= 0) {
-        pageOffset * 0.3f // Swipe from left to right
-    } else {
-        pageOffset * -0.3f // Swipe from right to left
-    }
-
-    val scale = lerp(
-        start = 3.0f, // this can be adjusted to change the scaling of the image
-        stop = 1f,
-        fraction = 1f - translationFraction.coerceIn(0f, 1f)
-    )
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .aspectRatio(1.4f)
+    @Composable
+    fun ParallaxSwiper(
+        viewPortFraction: Float = 0.85f,
+        initialPage: Int = 0,
+        initialPageOffsetFraction: Float = 0f
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(MaterialTheme.shapes.large)
-        ) {
+        val images = listOf(
+            R.drawable.image1,
+            R.drawable.image2,
+            R.drawable.image3,
+            R.drawable.image4,
+            R.drawable.image5
+        )
 
-            AsyncImage(
-                model = image,
-                contentDescription = "Scene image",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                        translationX = translationFraction * size.width * 0.3f
-                    },
-                contentScale = ContentScale.Crop
+        val pagerState = rememberPagerState(
+            initialPage = initialPage,
+            pageCount = { images.size },
+            initialPageOffsetFraction = initialPageOffsetFraction
+        )
+        val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+        val contentPadding = (screenWidth * (1f - viewPortFraction) / 2)
+
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(horizontal = contentPadding)
+        ) { page ->
+            val pageOffset = calculateCurrentOffsetForPage(page, pagerState)
+            SwiperItem(
+                image = images[page],
+                pageOffset = pageOffset
             )
         }
     }
-}
+
+    @Composable
+    fun SwiperItem(
+        image: Int,
+        pageOffset: Float,
+    ) {
+
+        val translationFraction = if (pageOffset >= 0) {
+            pageOffset * 0.2f // Swipe from left to right
+        } else {
+            pageOffset * -0.2f // Swipe from right to left
+        }
+
+        val scale = lerp(
+            start = 2.0f, // this can be adjusted to change the scaling of the image
+            stop = 1f,
+            fraction = 1f - translationFraction.coerceIn(0f, 1f)
+        )
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .aspectRatio(1f)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(MaterialTheme.shapes.large)
+            ) {
+
+                AsyncImage(
+                    model = image,
+                    contentDescription = "Scene image",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer {
+                            scaleX = scale
+                            scaleY = scale
+                            translationX = translationFraction * size.width * 0.3f
+                        },
+
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+    }
 
 
-@Composable
-fun calculateCurrentOffsetForPage(page: Int, pagerState: PagerState): Float {
-    return (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-}
+    @Composable
+    fun calculateCurrentOffsetForPage(page: Int, pagerState: PagerState): Float {
+        return (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+    }
 
 @Composable
 @Preview
