@@ -124,11 +124,13 @@ fun ProfileScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
+                .background(Color.Black)
                 .aspectRatio(1f)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color.Black)
                     .clip(MaterialTheme.shapes.large)
             ) {
 
