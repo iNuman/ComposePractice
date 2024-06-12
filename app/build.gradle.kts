@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+//    alias(libs.plugins.compose.compiler) apply false
 }
+
 
 android {
     namespace = "com.example.composepractice"
@@ -30,18 +32,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_20
+        targetCompatibility = JavaVersion.VERSION_20
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "20"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.13"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -62,8 +65,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     // Navigation Compose
     implementation(libs.navigation.compose)
-    implementation ("androidx.compose.foundation:foundation:1.7.0-beta02")
-    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation (libs.androidx.foundation)
+    implementation(libs.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

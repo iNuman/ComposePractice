@@ -8,6 +8,7 @@ import com.example.composepractice.screens.HomeScreen
 import com.example.composepractice.screens.ProfileScreen
 import com.example.composepractice.screens.SettingsScreen
 import androidx.navigation.compose.NavHost
+import com.example.composepractice.screens.SearchScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -24,6 +25,9 @@ fun BottomNavGraph(navController: NavHostController, modifier: Modifier = Modifi
         }
         composable(BottomBarScreen.Settings.route) {
             SettingsScreen()
+        }
+        composable(BottomBarScreen.Search.route) {
+            SearchScreen()
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.composepractice
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -27,5 +28,10 @@ sealed class BottomBarScreen(
         route = "settings",
         title = "Settings",
         icon = Icons.Default.Settings
+    )
+    object Search : BottomBarScreen(
+        route = "search",
+        title = "Search",
+        icon = Icons.Default.Search
     )
 }
